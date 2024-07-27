@@ -37,7 +37,7 @@ float *_reallocate(float *data, int size) {
 
 @return FloatVector* //the created vector.
 */
-FloatVector *create(int capacity) {
+FloatVector *vector_create(int capacity) {
 	FloatVector *vec = (FloatVector *) _allocate(1, sizeof(FloatVector));
 
 	vec->capacity = capacity;
@@ -54,7 +54,7 @@ FloatVector *create(int capacity) {
 
 @return void.
 */
-void destroy(FloatVector **vec_ref) {
+void vector_destroy(FloatVector **vec_ref) {
     if (vec_ref == NULL || *vec_ref == NULL) {
         return;
     }
@@ -77,7 +77,7 @@ void destroy(FloatVector **vec_ref) {
 
 @return size //vector size.
 */
-int size(const FloatVector *vec) {
+int vector_size(const FloatVector *vec) {
 	return(vec->size);
 }
 
@@ -88,7 +88,7 @@ int size(const FloatVector *vec) {
 
 @return capacity //vector capacity.
 */
-int capacity(const FloatVector *vec) {
+int vector_capacity(const FloatVector *vec) {
 	return(vec->capacity);
 }
 
@@ -100,7 +100,7 @@ int capacity(const FloatVector *vec) {
 
 @return value //the value at the specified index.
 */
-float at(const FloatVector *vec, int index) {
+float vector_at(const FloatVector *vec, int index) {
 	if (index > vec->size-1 || index < 0) {
 		printf("Error: index out of bounds!");
 		exit(1);
@@ -117,7 +117,7 @@ float at(const FloatVector *vec, int index) {
 
 @return value //the value at the specified index.
 */
-float get(const FloatVector *vec, int index) {
+float vector_get(const FloatVector *vec, int index) {
 	return(vec->data[index]);
 }
 
@@ -129,7 +129,7 @@ float get(const FloatVector *vec, int index) {
 
 @return void.
 */
-void append(FloatVector *vec, float value) {
+void vector_append(FloatVector *vec, float value) {
 	if (vec->capacity == vec->size) {
 		//expand by 5
 		vec->capacity += 5;
@@ -148,14 +148,14 @@ void append(FloatVector *vec, float value) {
 
 @return void.
 */
-void print(const FloatVector *vec) {
+void vector_print(const FloatVector *vec) {
 	printf("FloatVector {\n");
 
 	printf("  size: %d\n", vec->size);
 	printf("  capacity: %d\n  [ ", vec->capacity);
 
 	for (int i = 0; i < vec->size; i++) {
-		printf("%d ", i, vec->data[i]);
+		printf("%f ", vec->data[i]);
 	}
 	printf("]\n}\n");
 }

@@ -2,14 +2,14 @@
 #include <stdio.h>
 
 int main(void) {
-	FloatVector *vec = create(1);
+	FloatVector *vec = vector_create(1);
 
-	append(vec, 1);
-	append(vec, 2);
+	vector_append(vec, 1);
+	vector_append(vec, 2);
 
-	print(vec);
+	vector_print(vec);
 
-	destroy(&vec);
+	vector_destroy(&vec);
 
 	return(0);
 }
