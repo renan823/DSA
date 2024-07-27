@@ -122,6 +122,17 @@ float vector_get(const FloatVector *vec, int index) {
 }
 
 /*
+*/
+void vector_set(FloatVector *vec, int index, float value) {
+	if (index > vec->size-1 || index < 0) {
+		printf("Error: index out of bounds!");
+		exit(1);
+	}
+
+	vec->data[index] = value;
+}
+
+/*
 @brief Append a value at the last position of vector. The vector will be expanted if it's full.
 
 @param vec //vector to append value.
