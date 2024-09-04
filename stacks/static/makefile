@@ -1,10 +1,14 @@
-all: type.o stack.o main.o
-	gcc main.o type.o stack.o -o stacks -std=c99 -Wall -pedantic-errors
-type.o:
-	gcc -c type.c
+all: stack.o main.o
+	gcc main.o item.o stack.o -o stacks -std=c99 -Wall -pedantic-errors
+
 stack.o:
 	gcc -c stack.c
+
 main.o:
 	gcc -c main.c
+
+run:
+	./stacks
+	
 clean:
-	rm *.o stacks
+	rm main.o stack.o stacks

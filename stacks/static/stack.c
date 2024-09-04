@@ -1,79 +1,107 @@
 #include "stack.h"
-#include "type.h"
+#include "item.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 struct stack {
-    int capacity;
     int size;
-    Type *data;
+    ITEM* items[MAX_CAPACITY];
 };
 
-void *_allocate(int items, unsigned long int size) {
-    void *memory;
+STACK* stack_create() {
+    STACK* s = (STACK*) malloc(sizeof(STACK));
 
-    if ((memory = malloc(items * size)) == NULL) {
-        fprintf(stderr, "ERROR: Not enough memory!\n");
-        exit(EXIT_FAILURE);
+    if (s != NULL) {
+        s->size = 0;
     }
 
-    return(memory);
+    return(s);
 }
 
-Stack *create_stack(int capacity) {
-    Stack *stack = (Stack *) _allocate(1, sizeof(Stack));
-
-    stack->capacity = capacity;
-    stack->size = 0;
-    stack->data = (Type *) _allocate(capacity, sizeof(Type));
-
-    return(stack);
-}
-
-void destroy_stack(Stack *stack) {
-    free(stack->data);
-    free(stack);
-}
-
-bool stack_is_full(Stack *stack) {
-    return(stack->size == stack->capacity);
-}
-
-bool stack_is_empty(Stack *stack) {
-    return(stack->size == 0);
-}
-    
-void stack_push(Stack *stack, Type value) {
-    if (stack_is_full(stack)) {
-        fprintf(stderr, "ERROR: The stack is full!\n");
+void stack_destroy(STACK** stack) {
+    if (*stack == NULL) {
         return;
     }
 
-    stack->data[stack->size] = value;
-    stack->size++;
+    for (int i = 0; i < (*stack)->size; i++) {
+        item_destroy(&(*stack)->items[i]);
+    }
+
+    free(*stack);
+    *stack = NULL;
 }
 
-Type *stack_pop(Stack *stack) {
+bool stack_is_full(STACK* stack) {
+    if (stack == NULL) {
+        return(true);
+    }
+
+    return(stack->size == MAX_CAPACITY);
+}
+
+bool stack_is_empty(STACK* stack) {
+    if (stack == NULL) {
+        return(false);
+    }
+
+    return(stack->size == 0);
+}
+
+bool stack_push(STACK* stack, ITEM* value) {
+    if (stack_is_full(stack)) {
+        return(false);
+    }
+
+    stack->items[stack->size] = value;
+    stack->size++;
+
+    return(true);
+}
+
+ITEM* stack_pop(STACK* stack) {
     if (stack_is_empty(stack)) {
-        fprintf(stderr, "ERROR: The stack is empty!\n");
         return(NULL);
     }
 
     stack->size--;
-    return(&(stack->data[stack->size]));
+
+    ITEM* item = stack->items[stack->size];
+    stack->items[stack->size] = NULL;
+
+    return(item);
 }
 
-Type *stack_peek(Stack *stack) {
+ITEM* stack_peek(STACK* stack) {
     if (stack_is_empty(stack)) {
-        fprintf(stderr, "ERROR: The stack is empty!\n");
         return(NULL);
     }
 
-    return(&(stack->data[stack->size-1]));
+    return(stack->items[stack->size-1]);
 }
 
-int stack_size(Stack *stack) {
+int stack_size(STACK* stack) {
+    if (stack == NULL) {
+        return(-1);
+    }
+
     return(stack->size);
+}
+
+void stack_print(STACK* stack) {
+    if (stack == NULL) {
+        return;
+    }
+
+    printf("STACK {\n");
+    printf(" size: %d\n", stack->size);
+    printf(" items (keys): [ ");
+
+    for (int i = 0; i < stack->size; i++) {
+        printf("%d ", item_get_key(stack->items[i]));
+    }
+
+    printf("]\n");
+    printf("}\n");
 }

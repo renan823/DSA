@@ -1,20 +1,22 @@
 #ifndef STACK_H
     #define STACK_H
+    #define MAX_CAPACITY 100
 
-    #include "type.h"
-
+    #include "item.h"
     #include <stdbool.h>
 
-    typedef struct stack Stack;
+    typedef struct stack STACK;
 
-    Stack *create_stack(int capacity);
-    void destroy_stack(Stack *stack);
+    STACK* stack_create();
+    void stack_destroy(STACK** stack);
 
-    bool stack_is_full(Stack *stack);
-    bool stack_is_empty(Stack *stack);
+    bool stack_is_full(STACK* stack);
+    bool stack_is_empty(STACK* stack);
 
-    void stack_push(Stack *stack, Type value);
-    Type *stack_pop(Stack *stack);
-    Type *stack_peek(Stack *stack);
-    int stack_size(Stack *stack);
+    bool stack_push(STACK* stack, ITEM* value);
+    ITEM* stack_pop(STACK* stack);
+    ITEM* stack_peek(STACK* stack);
+    int stack_size(STACK* stack);
+
+    void stack_print(STACK* stack);
 #endif

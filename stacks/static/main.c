@@ -1,25 +1,22 @@
 #include "stack.h"
-#include "type.h"
+#include "item.h"
 
 #include <stdio.h>
 
 int main(void) {
-    Stack *s = create_stack(4);
+    STACK* s = stack_create();
 
-    stack_pop(s);
+    char c1 = 'O';
+    char c2 = 'i';
+    char c3 = '!';
 
-    stack_push(s, 17);
-    stack_push(s, 9);
-    stack_push(s, 13);
-    stack_push(s, 4);
+    stack_push(s, item_create(1, &c1));
+    stack_push(s, item_create(2, &c2));
+    stack_push(s, item_create(3, &c3));
 
-    printf("Is full ? %s\n", stack_is_full(s) ? "Yes" : "No");
+    stack_print(s);
 
-    stack_push(s, 11);
-
-    printf("Is empty ? %s\n", stack_is_empty(s) ? "Yes" : "No");
-
-    destroy_stack(s);
+    stack_destroy(&s);
 
     return(0);
 }
