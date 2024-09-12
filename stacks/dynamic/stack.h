@@ -1,22 +1,22 @@
 #ifndef STACK_H
     #define STACK_H
 
-    #include "type.h"
-
+    #include "item.h"
     #include <stdbool.h>
 
-    typedef struct stack Stack;
-    typedef struct node Node;
+    typedef struct stack STACK;
+    typedef struct node NODE;
 
-    Stack *create_stack();
-    void destroy_stack(Stack *stack);
+    STACK* stack_create();
+    void stack_destroy(STACK** stack);
 
-    bool stack_is_empty(Stack *stack);
+    bool stack_is_full(STACK* stack);
+    bool stack_is_empty(STACK* stack);
 
-    void stack_push(Stack *stack, Type value);
-    Type *stack_pop(Stack *stack);
-    Type *stack_peek(Stack *stack);
-    int stack_size(Stack *stack);
+    bool stack_push(STACK* stack, ITEM* value);
+    ITEM* stack_pop(STACK* stack);
+    ITEM* stack_peek(STACK* stack);
+    int stack_size(STACK* stack);
 
-    void stack_print(Stack *stack);
+    void stack_print(STACK* stack);
 #endif
