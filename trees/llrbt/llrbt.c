@@ -27,6 +27,7 @@ struct llrbt {
 /*
     Allocate a new LLRBT node.
     If node isn't NULL, its values are initialized.
+    The node starts with RED color.
     The created node is returned.
 */
 LLRBT_NODE *_llrbt_create_node(ITEM *item) {
