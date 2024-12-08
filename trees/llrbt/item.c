@@ -9,47 +9,53 @@ struct item {
 };
 
 ITEM *item_create(int key, void *value) {
-    ITEM *item = (ITEM *) malloc(sizeof(struct item)); 
+    ITEM *item = (ITEM*) malloc(sizeof(ITEM)); 
 
     if (item != NULL) {
         item->key = key;
         item->value = value;
     }
 
-    return item;
+    return(item);
 }
 
 void item_destroy(ITEM **item) {
-    if (item != NULL && *item != NULL) {
-        free(*item);
-        *item = NULL;
+    if (*item == NULL) {
+        return;
     }
+
+    free(*item);
+    *item = NULL;
 }
 
 int item_get_key(ITEM *item) {
-    if (item != NULL) {
-        return item->key;  
+    if (item == NULL) {
+        exit(1);
     }
 
-    return -1;  
+    return(item->key); 
 }
 
 void item_set_key(ITEM *item, int key) {
-    if (item != NULL) {
-        item->key = key;  
+    if (item == NULL) {
+        return; 
     }
+
+    item->key = key; 
 }
 
 void *item_get_value(ITEM *item) {
-    if (item != NULL) {
-        return item->value;  
+    if (item == NULL) {
+        return(NULL);
     }
 
-    return NULL;  
+    return(item->value);  
 }
 
 void item_set_value(ITEM *item, void *value) {
-    if (item != NULL) {
-        item->value = value;  
+    if (item == NULL) {
+        return;
     }
+
+    item->value = value; 
 }
